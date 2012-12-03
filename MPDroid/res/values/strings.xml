@@ -188,4 +188,6 @@
 	<string name="playOnPhoneStateChange">Resume playback</string>
 	<string name="playOnPhoneStateChangeDescription">Resume playback when a call ends</string>
 	
+	<string name="enablePersitentNotification">Enable notification</string>
+	<string name="enablePersitentNotificationDescription">Enable notification bar control</string>
 </resources>
