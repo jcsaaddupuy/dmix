@@ -28,6 +28,7 @@ import android.view.WindowManager.BadTokenException;
 
 import com.namelessdev.mpdroid.helpers.MPDAsyncHelper;
 import com.namelessdev.mpdroid.helpers.MPDAsyncHelper.ConnectionListener;
+import com.namelessdev.mpdroid.notifications.MPDroidNotificationManager;
 import com.namelessdev.mpdroid.tools.NetworkHelper;
 import com.namelessdev.mpdroid.tools.SettingsHelper;
 
@@ -247,14 +248,34 @@ public class MPDApplication extends Application implements ConnectionListener {
 				}
 			}
 		}
-
+		disableNotification();
 	}
 
 	public void connectionSucceeded(String message) {
 		dismissAlertDialog();
 		// checkMonitorNeeded();
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		enableNotification(settings.getBoolean("enablePersitentNotification", false));
+		
+		
 	}
-
+	public void enableNotification(boolean enable){
+		if(enable){
+			enableNotification();
+		}else{
+			disableNotification();
+		}
+	}
+	
+	public void enableNotification(){
+		oMPDAsyncHelper.addStatusChangeListener(MPDroidNotificationManager.getInstance(this, this.state.currentMpdStatus));
+		MPDroidNotificationManager.getInstance(this, this.state.currentMpdStatus).notifyChange();
+	}
+	
+	public void disableNotification(){
+		oMPDAsyncHelper.removeStatusChangeListener(MPDroidNotificationManager.getInstance(this));
+		MPDroidNotificationManager.cancelAll(this);
+	}
 	public ApplicationState getApplicationState() {
 		return state;
 	}
