@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.audiofx.BassBoost.Settings;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
@@ -21,7 +20,6 @@ import com.namelessdev.mpdroid.MPDApplication;
 import com.namelessdev.mpdroid.MainMenuActivity;
 import com.namelessdev.mpdroid.R;
 import com.namelessdev.mpdroid.helpers.CoverAsyncHelper.CoverDownloadListener;
-import com.namelessdev.mpdroid.tools.SettingsHelper;
 import com.namelessdev.mpdroid.widgets.WidgetHelperService;
 
 public class MPDroidNotificationManager implements StatusChangeListener,
