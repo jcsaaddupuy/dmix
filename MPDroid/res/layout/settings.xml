@@ -79,6 +79,10 @@
 		<EditTextPreference android:persistent="true"
 			android:title="@string/coverFileName" android:summary="@string/coverFileNameDescription"
 			android:key="coverFileName" android:defaultValue="folder.jpg" />
+		
+		<CheckBoxPreference android:persistent="true"
+			android:title="@string/enablePersitentNotification"
+			android:key="enablePersitentNotification" android:defaultValue="false" />
 	</PreferenceCategory>
 	
  	<PreferenceCategory android:title="@string/behavior">
