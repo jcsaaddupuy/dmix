@@ -13,13 +13,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface.OnKeyListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -28,7 +26,6 @@ import android.view.WindowManager.BadTokenException;
 
 import com.namelessdev.mpdroid.helpers.MPDAsyncHelper;
 import com.namelessdev.mpdroid.helpers.MPDAsyncHelper.ConnectionListener;
-import com.namelessdev.mpdroid.notifications.MPDroidNotificationManager;
 import com.namelessdev.mpdroid.tools.NetworkHelper;
 import com.namelessdev.mpdroid.tools.SettingsHelper;
 
@@ -248,36 +245,18 @@ public class MPDApplication extends Application implements ConnectionListener {
 				}
 			}
 		}
-		disableNotification();
 	}
 
 	public void connectionSucceeded(String message) {
 		dismissAlertDialog();
 		// checkMonitorNeeded();
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-		Log.d(TAG, "Connection succeed");
-		enableNotification(settings.getBoolean("enablePersitentNotification", false));
-		
-		
-	}
-	public void enableNotification(boolean enable){
-		if(enable){
-			enableNotification();
-		}else{
-			disableNotification();
-		}
+		Log.d(TAG, "Connection succeed");		
 	}
 	
-	public void enableNotification(){
-		oMPDAsyncHelper.addStatusChangeListener(MPDroidNotificationManager.getInstance(this, this.state.currentMpdStatus));
-		Log.d(TAG, "Enabling Notification");
-		MPDroidNotificationManager.getInstance(this, this.state.currentMpdStatus).notifyChange();
-	}
 	
-	public void disableNotification(){
-		oMPDAsyncHelper.removeStatusChangeListener(MPDroidNotificationManager.getInstance(this));
-		MPDroidNotificationManager.cancelAll(this);
-	}
+	
+	
 	public ApplicationState getApplicationState() {
 		return state;
 	}
