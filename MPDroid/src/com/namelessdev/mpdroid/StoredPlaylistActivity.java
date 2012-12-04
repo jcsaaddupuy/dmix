@@ -3,11 +3,11 @@ package com.namelessdev.mpdroid;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.namelessdev.mpdroid.base.RegisteredSherlockFragmentActivity;
 
-public class StoredPlaylistActivity extends SherlockFragmentActivity {
+public class StoredPlaylistActivity extends RegisteredSherlockFragmentActivity  {
 
 	@Override
 	protected void onCreate(Bundle arg0) {

@@ -1,14 +1,14 @@
 package com.namelessdev.mpdroid;
 
-import android.app.ListActivity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
+import com.namelessdev.mpdroid.base.RegisteredListActivity;
 import com.namelessdev.mpdroid.providers.ServerList;
 
-public class ServerListActivity extends ListActivity {
+public class ServerListActivity extends RegisteredListActivity {
 	private static final String[] PROJECTION = new String[] { ServerList.ServerColumns._ID, ServerList.ServerColumns.NAME,
 			ServerList.ServerColumns.HOST };
 

@@ -16,6 +16,7 @@ import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.namelessdev.mpdroid.base.RegisteredSherlockFragmentActivity;
 import com.namelessdev.mpdroid.fragments.AlbumsFragment;
 import com.namelessdev.mpdroid.fragments.ArtistsFragment;
 import com.namelessdev.mpdroid.fragments.FSFragment;
@@ -23,7 +24,7 @@ import com.namelessdev.mpdroid.fragments.GenresFragment;
 import com.namelessdev.mpdroid.fragments.PlaylistsFragment;
 import com.namelessdev.mpdroid.fragments.StreamsFragment;
 
-public class LibraryTabActivity extends SherlockFragmentActivity implements OnNavigationListener {
+public class LibraryTabActivity extends RegisteredSherlockFragmentActivity  implements OnNavigationListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide fragments for each of the
@@ -98,20 +99,6 @@ public class LibraryTabActivity extends SherlockFragmentActivity implements OnNa
 		mViewPager.setCurrentItem(defaultTab, true);
     }
 
-	@Override
-	public void onStart() {
-		super.onStart();
-		MPDApplication app = (MPDApplication) getApplicationContext();
-		app.setActivity(this);
-	}
-
-	@Override
-	public void onStop() {
-		super.onStop();
-		
-		MPDApplication app = (MPDApplication) getApplicationContext();
-		app.unsetActivity(this);
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

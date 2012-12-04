@@ -25,13 +25,14 @@ import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.namelessdev.mpdroid.base.RegisteredSherlockFragmentActivity;
 import com.namelessdev.mpdroid.fragments.NowPlayingFragment;
 import com.namelessdev.mpdroid.fragments.PlaylistFragment;
 import com.namelessdev.mpdroid.notifications.MPDroidNotificationManager;
 import com.namelessdev.mpdroid.providers.ServerList;
 import com.namelessdev.mpdroid.tools.Tools;
 
-public class MainMenuActivity extends SherlockFragmentActivity implements OnNavigationListener {
+public class MainMenuActivity extends RegisteredSherlockFragmentActivity  implements OnNavigationListener {
 
 	public static final int PLAYLIST = 1;
 
@@ -111,20 +112,6 @@ public class MainMenuActivity extends SherlockFragmentActivity implements OnNavi
         });
     }
 
-	@Override
-	public void onStart() {
-		super.onStart();
-		MPDApplication app = (MPDApplication) getApplicationContext();
-		app.setActivity(this);
-	}
-
-	@Override
-	public void onStop() {
-		super.onStop();
-		
-		MPDApplication app = (MPDApplication) getApplicationContext();
-		app.unsetActivity(this);
-	}
 
 	/**
 	 * Called when Back button is pressed, displays message to user indicating the if back button is pressed again the application will exit. We keep a count of how many time back

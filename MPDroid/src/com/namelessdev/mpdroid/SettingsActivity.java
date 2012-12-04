@@ -16,14 +16,15 @@ import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class SettingsActivity extends PreferenceActivity implements
+import com.namelessdev.mpdroid.base.RegisteredPreferenceActivity;
+
+public class SettingsActivity extends RegisteredPreferenceActivity implements
 		StatusChangeListener {
 
 	private static final int MAIN = 0;
@@ -138,20 +139,6 @@ public class SettingsActivity extends PreferenceActivity implements
 			populateOutputsScreen();
 			setPreferenceScreen(pOutputsScreen);
 		}
-	}
-
-	@Override
-	protected void onStart() {
-		super.onStart();
-		MPDApplication app = (MPDApplication) getApplicationContext();
-		app.setActivity(this);
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		MPDApplication app = (MPDApplication) getApplicationContext();
-		app.unsetActivity(this);
 	}
 
 	@Override

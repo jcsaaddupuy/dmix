@@ -3,13 +3,14 @@ package com.namelessdev.mpdroid;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class ConnectionSettings extends PreferenceActivity {
+import com.namelessdev.mpdroid.base.RegisteredPreferenceActivity;
+
+public class ConnectionSettings extends RegisteredPreferenceActivity {
 	public static final int MAIN = 0;
 
 	private static final String KEY_CONNECTION_CATEGORY = "connectionCategory";

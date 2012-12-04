@@ -7,7 +7,9 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 
-public class WarningActivity extends Activity {
+import com.namelessdev.mpdroid.base.RegisteredActivity;
+
+public class WarningActivity extends RegisteredActivity {
 	Activity myWarning;
 
 	@Override
