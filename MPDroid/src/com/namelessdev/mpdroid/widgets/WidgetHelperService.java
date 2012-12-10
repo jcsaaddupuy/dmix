@@ -15,7 +15,6 @@ public class WidgetHelperService extends IntentService {
 	public static final String CMD_PLAYPAUSE = "PLAYPAUSE";
 	public static final String CMD_PREV = "PREV";
 	public static final String CMD_NEXT = "NEXT";
-	public static final String CMD_STOP = "STOP";
 	public static final String CMD_UPDATE_WIDGET = "UPDATE_WIDGET";
 	
 	private boolean playing = false;
@@ -60,8 +59,6 @@ public class WidgetHelperService extends IntentService {
 				SimpleWidgetProvider.getInstance().notifyChange(this);
 			} else if(action.equals(CMD_NEXT)) {
 				mpd.next();
-			} else if(action.equals(CMD_STOP)) {
-				mpd.stop();
 			} else if(action.equals(CMD_UPDATE_WIDGET)) {
 				playing = mpd.getStatus().getState().equals(MPDStatus.MPD_STATE_PLAYING);
 				SimpleWidgetProvider.getInstance().notifyChange(this);
