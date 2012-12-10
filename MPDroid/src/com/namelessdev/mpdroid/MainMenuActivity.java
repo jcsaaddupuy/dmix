@@ -22,11 +22,13 @@ import android.widget.ArrayAdapter;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.namelessdev.mpdroid.base.RegisteredSherlockFragmentActivity;
 import com.namelessdev.mpdroid.fragments.NowPlayingFragment;
 import com.namelessdev.mpdroid.fragments.PlaylistFragment;
+import com.namelessdev.mpdroid.notifications.MPDroidNotificationManager;
 import com.namelessdev.mpdroid.providers.ServerList;
 import com.namelessdev.mpdroid.tools.Tools;
 
@@ -135,6 +137,7 @@ public class MainMenuActivity extends RegisteredSherlockFragmentActivity  implem
 			/*
 			 * Nasty force quit, should shutdown everything nicely but there just too many async tasks maybe I'll correctly implement app.terminateApplication();
 			 */
+			MPDroidNotificationManager.cancelAll(this);
 			System.exit(0);
 		}
 		return;
