@@ -8,14 +8,13 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.namelessdev.mpdroid.base.RegisteredPreferenceActivity;
-
-public class WifiConnectionSettings extends RegisteredPreferenceActivity {
+public class WifiConnectionSettings extends PreferenceActivity {
 
 	private static final int MAIN = 0;
 	private static final String KEY_WIFI_BASED_CATEGORY = "wifibasedCategory";

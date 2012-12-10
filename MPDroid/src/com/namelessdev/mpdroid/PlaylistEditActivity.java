@@ -21,12 +21,12 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.actionbarsherlock.app.SherlockListActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.namelessdev.mpdroid.base.RegisteredSherlockListActivity;
 import com.namelessdev.mpdroid.tools.Tools;
 import com.namelessdev.mpdroid.views.TouchInterceptor;
 
-public class PlaylistEditActivity extends RegisteredSherlockListActivity implements StatusChangeListener, OnClickListener {
+public class PlaylistEditActivity extends SherlockListActivity implements StatusChangeListener, OnClickListener {
 	private ArrayList<HashMap<String, Object>> songlist = new ArrayList<HashMap<String, Object>>();
 	private List<Music> musics;
 	private String playlistName=null;
@@ -130,6 +130,19 @@ public class PlaylistEditActivity extends RegisteredSherlockListActivity impleme
 		((SimpleAdapter) getListAdapter()).notifyDataSetChanged();
 	}
 
+	@Override
+	protected void onStart() {
+		super.onStart();
+		MPDApplication app = (MPDApplication) getApplicationContext();
+		app.setActivity(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		MPDApplication app = (MPDApplication) getApplicationContext();
+		app.unsetActivity(this);
+	}
 
 	private TouchInterceptor.DropListener mDropListener = new TouchInterceptor.DropListener() {
 		public void drop(int from, int to) {

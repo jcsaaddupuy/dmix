@@ -14,10 +14,9 @@ import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 
-import com.namelessdev.mpdroid.base.RegisteredBrowseActivity;
 import com.namelessdev.mpdroid.tools.Tools;
 
-public class PlaylistManagerActivity extends RegisteredBrowseActivity implements OnMenuItemClickListener {
+public class PlaylistManagerActivity extends BrowseActivity implements OnMenuItemClickListener {
 
 	static final int DELETE = 2;
 

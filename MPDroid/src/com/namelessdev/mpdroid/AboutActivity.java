@@ -7,9 +7,7 @@ import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.namelessdev.mpdroid.base.RegisteredActivity;
-
-public class AboutActivity extends RegisteredActivity {
+public class AboutActivity extends Activity {
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -29,6 +27,20 @@ public class AboutActivity extends RegisteredActivity {
 		} catch (android.content.pm.PackageManager.NameNotFoundException e) {
 			return null;
 		}
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		MPDApplication app = (MPDApplication) getApplicationContext();
+		app.setActivity(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		MPDApplication app = (MPDApplication) getApplicationContext();
+		app.unsetActivity(this);
 	}
 
 }

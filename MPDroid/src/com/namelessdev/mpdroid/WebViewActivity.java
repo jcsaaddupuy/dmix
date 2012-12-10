@@ -3,9 +3,9 @@ package com.namelessdev.mpdroid;
 import android.os.Bundle;
 import android.webkit.WebView;
 
-import com.namelessdev.mpdroid.base.RegisteredSherlockActivity;
+import com.actionbarsherlock.app.SherlockActivity;
 
-public class WebViewActivity extends RegisteredSherlockActivity {
+public class WebViewActivity extends SherlockActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

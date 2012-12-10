@@ -7,7 +7,6 @@ import org.a0z.mpd.MPDPlaylist;
 import org.a0z.mpd.MPDStatus;
 import org.a0z.mpd.exception.MPDServerException;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -17,13 +16,13 @@ import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.SherlockListActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.namelessdev.mpdroid.adapters.ArrayIndexerAdapter;
-import com.namelessdev.mpdroid.base.RegisteredSherlockListActivity;
 import com.namelessdev.mpdroid.helpers.MPDAsyncHelper.AsyncExecListener;
-public abstract class BrowseActivity extends RegisteredSherlockListActivity implements OnMenuItemClickListener, AsyncExecListener {
+public abstract class BrowseActivity extends SherlockListActivity implements OnMenuItemClickListener, AsyncExecListener {
 
 	protected int iJobID = -1;
 
@@ -43,7 +42,6 @@ public abstract class BrowseActivity extends RegisteredSherlockListActivity impl
 	String context;
 	int irAdd, irAdded;
 
-	@SuppressLint("NewApi")
 	public BrowseActivity(int rAdd, int rAdded, String pContext) {
 		super();
 		if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -73,6 +71,19 @@ public abstract class BrowseActivity extends RegisteredSherlockListActivity impl
 		setTitle(title);
 	}
 	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		MPDApplication app = (MPDApplication) getApplicationContext();
+		app.setActivity(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		MPDApplication app = (MPDApplication) getApplicationContext();
+		app.unsetActivity(this);
+	}
 
 	/*
 	 * Override this to display a custom loading text

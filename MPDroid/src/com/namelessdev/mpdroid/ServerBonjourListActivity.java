@@ -13,14 +13,13 @@ import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
 
+import android.app.ListActivity;
 import android.content.Context;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.widget.SimpleAdapter;
 
-import com.namelessdev.mpdroid.base.RegisteredListActivity;
-
-public class ServerBonjourListActivity extends RegisteredListActivity implements ServiceListener {
+public class ServerBonjourListActivity extends ListActivity implements ServiceListener {
 	
 	private static final String SERVER_NAME = "server_name";
 	private static final String SERVER_IP = "server_ip";

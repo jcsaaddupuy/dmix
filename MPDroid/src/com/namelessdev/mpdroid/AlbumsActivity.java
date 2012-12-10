@@ -6,9 +6,8 @@ import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.namelessdev.mpdroid.base.RegisteredSherlockFragmentActivity;
 
-public class AlbumsActivity extends RegisteredSherlockFragmentActivity{
+public class AlbumsActivity extends SherlockFragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle arg0) {
