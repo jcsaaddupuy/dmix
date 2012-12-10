@@ -161,6 +161,4 @@
 	<string name="pauseOnPhoneStateChangeDescription">Mettre la lecture en pause lors d\'un appel</string>
 	<string name="playOnPhoneStateChange">Reprendre la lecture</string>
 	<string name="playOnPhoneStateChangeDescription">Reprendre la lecture lorsqu\'un appel se termine</string>
-		
-	<string name="enablePersitentNotification">Activer le contrôle dans la barre de notification</string>
 </resources>
