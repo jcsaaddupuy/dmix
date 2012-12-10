@@ -9,11 +9,12 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
-import android.util.Log;
 
 import com.namelessdev.mpdroid.MPDApplication;
 import com.namelessdev.mpdroid.MainMenuActivity;
@@ -27,11 +28,11 @@ public class MPDroidNotificationManager implements StatusChangeListener,
 	public static final int NOTIFICATION_ID = 0;
 	private static MPDroidNotificationManager instance;
 
-	private boolean isEnable = true;
+	private boolean isEnable;
 	Notification noti;
 	private Context context;
 	private Bitmap lastBitmap;
-	private static MPDStatus lastMpdStatus;
+	private MPDStatus lastMpdStatus;
 
 	public static MPDroidNotificationManager getInstance(Context context) {
 		if (instance == null) {
@@ -43,15 +44,12 @@ public class MPDroidNotificationManager implements StatusChangeListener,
 	public static MPDroidNotificationManager getInstance(Context context,
 			MPDStatus initialstatus) {
 		getInstance(context);
-		lastMpdStatus = initialstatus;
+		instance.lastMpdStatus = initialstatus;
 		return instance;
 	}
 
-	public static void setMpdStatus(MPDStatus mpdstatus) {
-		lastMpdStatus = mpdstatus;
-	}
-
 	private MPDroidNotificationManager(Context context) {
+		isEnable = false;
 		this.context = context;
 		this.lastBitmap = BitmapFactory.decodeResource(context.getResources(),
 				R.drawable.icon);
@@ -59,19 +57,15 @@ public class MPDroidNotificationManager implements StatusChangeListener,
 
 	@Override
 	public void onCoverDownloaded(Bitmap cover) {
-		/*
 		lastBitmap = cover;
 		this.notifyChange();
-		*/
 	}
 
 	@Override
 	public void onCoverNotFound() {
-		/*
 		this.lastBitmap = BitmapFactory.decodeResource(context.getResources(),
 				R.drawable.icon);
 		this.notifyChange();
-		*/
 	}
 
 	@Override
@@ -87,15 +81,13 @@ public class MPDroidNotificationManager implements StatusChangeListener,
 
 	@Override
 	public void trackChanged(MPDStatus mpdStatus, int oldTrack) {
-		Log.d(MPDApplication.TAG, "Track changed");
-		lastMpdStatus = mpdStatus;
+		this.lastMpdStatus = mpdStatus;
 		this.notifyChange();
 	}
 
 	@Override
 	public void stateChanged(MPDStatus mpdStatus, String oldState) {
-		lastMpdStatus = mpdStatus;
-		Log.d(MPDApplication.TAG, "State changed");
+		this.lastMpdStatus = mpdStatus;
 		this.notifyChange();
 	}
 
@@ -117,36 +109,27 @@ public class MPDroidNotificationManager implements StatusChangeListener,
 
 	@Override
 	public void connectionStateChanged(boolean connected, boolean connectionLost) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("Connection State changed. connected : ").append(connected)
-				.append(" connectionlost : ").append(connectionLost);
-		Log.d(MPDApplication.TAG, sb.toString());
 		this.isEnable = connected && !connectionLost;
 
 	}
 
 	public void notifyChange() {
 		if (!this.isEnable) {
-			Log.d(MPDApplication.TAG, "Notification disabled");
 			return;
 		}
-		if (lastMpdStatus == null) {
-			Log.e(MPDApplication.TAG, "lastMpdStatus null");
+		if (this.lastMpdStatus == null) {
 			return;
 		}
+		SharedPreferences settings = PreferenceManager
+				.getDefaultSharedPreferences(context);
 
-		/*
-		 * SharedPreferences settings = PreferenceManager
-		 * .getDefaultSharedPreferences(context);
-		 * 
-		 * boolean shoulDisplayStop = settings.getBoolean("enableStopButton",
-		 * false);
-		 */
+		boolean shoulDisplayStop = settings.getBoolean("enableStopButton",
+				false);
 		Music actSong = null;
 		actSong = ((MPDApplication) this.context.getApplicationContext()).oMPDAsyncHelper.oMPD
-				.getPlaylist().getByIndex(lastMpdStatus.getSongPos());
+				.getPlaylist().getByIndex(this.lastMpdStatus.getSongPos());
 
-		boolean isPlaying = lastMpdStatus.getState().equalsIgnoreCase(
+		boolean isPlaying = this.lastMpdStatus.getState().equalsIgnoreCase(
 				MPDStatus.MPD_STATE_PLAYING);
 		// Prepare intent which is triggered if the
 		// notification is selected
@@ -169,12 +152,10 @@ public class MPDroidNotificationManager implements StatusChangeListener,
 		PendingIntent pIntentPlayPause = PendingIntent.getService(context, 0,
 				iPlayPause, PendingIntent.FLAG_UPDATE_CURRENT);
 
-		StringBuilder sb = new StringBuilder();
-		sb.append(actSong.getArtist()).append(" - ").append(actSong.getAlbum());
-
 		Builder nb = new NotificationCompat.Builder(context)
 				.setContentTitle(actSong.getTitle())
-				.setContentText(sb.toString())
+				.setContentText(
+						actSong.getArtist() + " - " + actSong.getAlbum())
 				.setSmallIcon(R.drawable.icon)
 				.setLargeIcon(this.lastBitmap)
 				.setContentIntent(pIntentApp)
@@ -198,12 +179,9 @@ public class MPDroidNotificationManager implements StatusChangeListener,
 
 		noti.flags = Notification.FLAG_ONGOING_EVENT;
 		NotificationManager nm = getNotificationManager(context);
-		if (nm == null) {
-			Log.e(MPDApplication.TAG, "NotificationManager was null!");
+		if (nm != null) {
+			nm.notify(NOTIFICATION_ID, noti);
 		}
-		Log.d(MPDApplication.TAG, "Updating notification");
-		nm.notify(NOTIFICATION_ID, noti);
-
 	}
 
 	public static NotificationManager getNotificationManager(Context context) {
@@ -214,20 +192,14 @@ public class MPDroidNotificationManager implements StatusChangeListener,
 
 	public static void cancel(Context context) {
 		NotificationManager nm = getNotificationManager(context);
-		Log.d(MPDApplication.TAG, "Cancelling notification");
-		if (nm == null) {
-			Log.e(MPDApplication.TAG, "NotificationManager was null!");
-		} else {
+		if (nm != null) {
 			nm.cancel(NOTIFICATION_ID);
 		}
 	}
 
 	public static void cancelAll(Context context) {
 		NotificationManager nm = getNotificationManager(context);
-		Log.d(MPDApplication.TAG, "Cancelling all notification");
-		if (nm == null) {
-			Log.e(MPDApplication.TAG, "NotificationManager was null!");
-		} else {
+		if (nm != null) {
 			nm.cancelAll();
 		}
 	}
