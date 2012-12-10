@@ -232,7 +232,11 @@ public class SettingsActivity extends PreferenceActivity implements
 			CheckBoxPreference cPause = (CheckBoxPreference) findPreference("pauseOnPhoneStateChange");
 			CheckBoxPreference c = (CheckBoxPreference) findPreference("playOnPhoneStateChange");
 			c.setEnabled(cPause.isChecked());
+		}else if (preference.getKey().equals("enablePersitentNotification")) {
+			CheckBoxPreference c = (CheckBoxPreference) findPreference("enablePersitentNotification");
+			app.enableNotification(c.isChecked());
 		}
+		
 		return false;
 
 	}
