@@ -255,7 +255,6 @@ public class MPDApplication extends Application implements ConnectionListener {
 		dismissAlertDialog();
 		// checkMonitorNeeded();
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-		Log.d(TAG, "Connection succeed");
 		enableNotification(settings.getBoolean("enablePersitentNotification", false));
 		
 		
@@ -270,7 +269,6 @@ public class MPDApplication extends Application implements ConnectionListener {
 	
 	public void enableNotification(){
 		oMPDAsyncHelper.addStatusChangeListener(MPDroidNotificationManager.getInstance(this, this.state.currentMpdStatus));
-		Log.d(TAG, "Enabling Notification");
 		MPDroidNotificationManager.getInstance(this, this.state.currentMpdStatus).notifyChange();
 	}
 	
